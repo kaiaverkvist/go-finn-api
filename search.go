@@ -88,7 +88,7 @@ func (s *Search[T]) FetchAds(iteratePages bool) ([]T, error) {
 	time.Sleep(s.requestDelay)
 	s.iteratedPages = 1
 	var docs []T
-	if iteratePages && s.pageCount >= 2 {
+	if iteratePages {
 		for i := 0; i < s.pageCount; i++ {
 			d, err := s.iteratePage(i + 1)
 			if err != nil {
