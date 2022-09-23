@@ -20,6 +20,7 @@ type Search[T any] struct {
 	totalResults  int
 	pageCount     int
 	iteratedPages int
+	searchTitle   string
 
 	requestDelay time.Duration
 }
@@ -83,6 +84,7 @@ func (s *Search[T]) FetchAds(iteratePages bool) ([]T, error) {
 	}
 
 	s.pageCount = firstResult.Props.PageProps.Search.Metadata.Paging.Last
+	s.searchTitle = firstResult.Props.PageProps.Search.ResultHeading
 	s.totalResults = firstResult.Props.PageProps.Search.Metadata.ResultSize.MatchCount
 
 	time.Sleep(s.requestDelay)
@@ -102,6 +104,10 @@ func (s *Search[T]) FetchAds(iteratePages bool) ([]T, error) {
 	}
 
 	return docs, nil
+}
+
+func (s *Search[T]) GetTitle() string {
+	return s.searchTitle
 }
 
 func (s *Search[T]) iteratePage(page int) ([]T, error) {
