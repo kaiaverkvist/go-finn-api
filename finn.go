@@ -176,29 +176,10 @@ type SearchResult[T any] struct {
 		} `json:"featureToggles"`
 		NSSP bool `json:"__N_SSP"`
 	} `json:"props"`
-	Page  string `json:"page"`
-	Query struct {
-		BodyType          []string `json:"body_type"`
-		Condition         string   `json:"condition"`
-		ExteriorColour    []string `json:"exterior_colour"`
-		Fuel              []string `json:"fuel"`
-		Location          []string `json:"location"`
-		Make              []string `json:"make"`
-		MileageFrom       string   `json:"mileage_from"`
-		Model             []string `json:"model"`
-		PriceFrom         string   `json:"price_from"`
-		Sort              string   `json:"sort"`
-		StoredId          string   `json:"stored-id"`
-		Transmission      []string `json:"transmission"`
-		WarrantyInsurance []string `json:"warranty_insurance"`
-		WheelDrive        []string `json:"wheel_drive"`
-		WheelSets         []string `json:"wheel_sets"`
-		YearFrom          string   `json:"year_from"`
-		Vertical          string   `json:"vertical"`
-		Subvertical       string   `json:"subvertical"`
-	} `json:"query"`
-	BuildId       string `json:"buildId"`
-	AssetPrefix   string `json:"assetPrefix"`
+	Page          string         `json:"page"`
+	Query         map[string]any `json:"query"`
+	BuildId       string         `json:"buildId"`
+	AssetPrefix   string         `json:"assetPrefix"`
 	RuntimeConfig struct {
 		CanonicalBaseUrl string `json:"canonicalBaseUrl"`
 		BapAdUrl         string `json:"bapAdUrl"`
