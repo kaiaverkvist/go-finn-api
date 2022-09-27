@@ -3,6 +3,7 @@ package finn
 type IClient interface {
 	CarSearch(uri string) (*SearchResult[CarListing], error)
 	RealEstateSearch(uri string) (*SearchResult[RealEstateListing], error)
+	GenericSearch(uri string) (*SearchResult[any], error)
 }
 
 type SearchParam struct {

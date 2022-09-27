@@ -54,6 +54,28 @@ func (w WebsiteClient) CarSearch(uri string) (*finn.SearchResult[finn.CarListing
 	return &result, nil
 }
 
+func (w WebsiteClient) GenericSearch(uri string) (*finn.SearchResult[any], error) {
+	var result finn.SearchResult[any]
+	var err error
+
+	// Extract inner html from the __NEXT_DATA__ tagged
+	w.c.OnHTML("#__NEXT_DATA__", func(e *colly.HTMLElement) {
+		x := e.Text
+		err = json.Unmarshal([]byte(x), &result)
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = w.c.Visit(uri)
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
+}
+
 func NewWebsiteClient() *WebsiteClient {
 	return &WebsiteClient{c: colly.NewCollector(
 		colly.AllowURLRevisit(),
