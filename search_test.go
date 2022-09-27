@@ -23,6 +23,11 @@ var (
 
 type MockClient struct{}
 
+func (m MockClient) GenericSearch(uri string) (*finn.GenericSearchResult, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (m MockClient) RealEstateSearch(uri string) (*finn.SearchResult[finn.RealEstateListing], error) {
 	//TODO implement me
 	panic("implement me")
@@ -90,5 +95,17 @@ func TestNewCarSearch_MultiPageTestUrl_RealClient(t *testing.T) {
 	}
 	s.SetDelay(time.Millisecond * 200)
 	_, err = s.FetchAds(true)
+	assert.Nil(t, err)
+}
+
+func TestNewGenericSearch_MultiPageTestUrl_RealClient(t *testing.T) {
+	url := multiPageTestUrl
+	s, err := finn.NewGenericSearch(url, clients.NewWebsiteClient())
+	if err != nil {
+		log.Println(err)
+	}
+	s.SetDelay(time.Millisecond * 200)
+	ads, err := s.FetchAds(true)
+	assert.NotNil(t, ads)
 	assert.Nil(t, err)
 }

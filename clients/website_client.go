@@ -54,8 +54,8 @@ func (w WebsiteClient) CarSearch(uri string) (*finn.SearchResult[finn.CarListing
 	return &result, nil
 }
 
-func (w WebsiteClient) GenericSearch(uri string) (*finn.SearchResult[any], error) {
-	var result finn.SearchResult[any]
+func (w WebsiteClient) GenericSearch(uri string) (*finn.GenericSearchResult, error) {
+	var result finn.GenericSearchResult
 	var err error
 
 	// Extract inner html from the __NEXT_DATA__ tagged
