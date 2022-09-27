@@ -9,7 +9,6 @@ import (
 )
 
 const (
-	searchType_Generic    = "generic"
 	searchType_Car        = "car"
 	searchType_RealEstate = "realestate"
 )
@@ -68,30 +67,6 @@ func NewRealEstateSearch(uri string, client IClient) (*Search[RealEstateListing]
 	}
 
 	search := Search[RealEstateListing]{
-		searchType:   searchType_RealEstate,
-		client:       client,
-		OriginalUri:  uri,
-		ParsedUri:    parsedUri,
-		Attributes:   params,
-		requestDelay: time.Second * 2,
-	}
-
-	// Attributes parsing (query params to map)
-	return &search, nil
-}
-
-func NewGenericSearch(uri string, client IClient) (*Search[any], error) {
-	parsedUri, err := url.Parse(uri)
-	if err != nil {
-		return nil, fmt.Errorf("could not create search type due to url parsing error: %s", err.Error())
-	}
-
-	params, err := url.ParseQuery(parsedUri.RawQuery)
-	if err != nil {
-		return nil, fmt.Errorf("could not create search type due to query params parsing error: %s", err.Error())
-	}
-
-	search := Search[any]{
 		searchType:   searchType_RealEstate,
 		client:       client,
 		OriginalUri:  uri,

@@ -24,13 +24,39 @@ var (
 type MockClient struct{}
 
 func (m MockClient) GenericSearch(uri string) (*finn.GenericSearchResult, error) {
-	//TODO implement me
-	panic("implement me")
+	jsonFile, err := os.Open("testfiles/car-ads-response.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	byteValue, _ := io.ReadAll(jsonFile)
+
+	var result finn.GenericSearchResult
+
+	err = json.Unmarshal(byteValue, &result)
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
 }
 
 func (m MockClient) RealEstateSearch(uri string) (*finn.SearchResult[finn.RealEstateListing], error) {
-	//TODO implement me
-	panic("implement me")
+	jsonFile, err := os.Open("testfiles/real-estate-response-2.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	byteValue, _ := io.ReadAll(jsonFile)
+
+	var result finn.SearchResult[finn.RealEstateListing]
+
+	err = json.Unmarshal(byteValue, &result)
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
 }
 
 func (m MockClient) CarSearch(uri string) (*finn.SearchResult[finn.CarListing], error) {
@@ -69,7 +95,7 @@ func TestNewCarSearch_ValidSearchURL(t *testing.T) {
 	}
 }
 
-func TestSearch_FetchAds(t *testing.T) {
+func TestNewCarSearch_FetchAds(t *testing.T) {
 	for _, url := range searchUrls {
 		s, err := finn.NewCarSearch(url, MockClient{})
 		assert.Nil(t, err)
@@ -95,17 +121,5 @@ func TestNewCarSearch_MultiPageTestUrl_RealClient(t *testing.T) {
 	}
 	s.SetDelay(time.Millisecond * 200)
 	_, err = s.FetchAds(true)
-	assert.Nil(t, err)
-}
-
-func TestNewGenericSearch_MultiPageTestUrl_RealClient(t *testing.T) {
-	url := multiPageTestUrl
-	s, err := finn.NewGenericSearch(url, clients.NewWebsiteClient())
-	if err != nil {
-		log.Println(err)
-	}
-	s.SetDelay(time.Millisecond * 200)
-	ads, err := s.FetchAds(true)
-	assert.NotNil(t, ads)
 	assert.Nil(t, err)
 }

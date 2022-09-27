@@ -215,7 +215,7 @@ type GenericSearchResult struct {
 	Props struct {
 		PageProps struct {
 			Search struct {
-				Docs    map[string]any `json:"docs"`
+				Docs    []map[string]any `json:"docs"`
 				Filters []struct {
 					DisplayName string `json:"display_name"`
 					Name        string `json:"name"`
