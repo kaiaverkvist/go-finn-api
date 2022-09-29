@@ -96,8 +96,11 @@ func (s *GenericSearch) iteratePage(page int) ([]map[string]any, error) {
 	var docs []map[string]any
 	// Initial search result for the first page in the search.
 	uri := *s.ParsedUri
-	uri.Query().Set("page", fmt.Sprintf("%d", page))
 
+	query := uri.Query()
+	query.Set("page", fmt.Sprintf("%d", page))
+
+	uri.RawQuery = query.Encode()
 	result, err := s.client.GenericSearch(uri.String())
 	if err != nil {
 		return nil, err

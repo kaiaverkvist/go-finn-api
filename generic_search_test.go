@@ -46,7 +46,7 @@ func TestNewGenericSearch_RealClient(t *testing.T) {
 }
 
 func TestNewGenericSearch_MultiPageTestUrl_RealClient(t *testing.T) {
-	url := multiPageTestUrl
+	url := secondaryMultiPageTestUrl
 	s, err := finn.NewGenericSearch(url, clients.NewWebsiteClient())
 	if err != nil {
 		log.Println(err)
